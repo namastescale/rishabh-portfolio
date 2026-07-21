@@ -16,6 +16,9 @@ export interface CaseStudy {
     futureEnhancements: string[];
     solutionsImplemented: string[];
     impactMetrics: string[];
+    demoLink?: string;
+    repoLink: string;
+    packageLink: string;
 }
 
 export interface Experience {
@@ -29,6 +32,107 @@ export interface Experience {
 }
 
 export const caseStudies: CaseStudy[] = [
+    {
+        id: "react-virtual-renderer",
+        title: "react-virtual-renderer — React Library",
+        domain: "Frontend Infrastructure / Developer Tooling",
+
+        techStack: [
+            "TypeScript",
+            "React",
+            "Fenwick Tree (Binary Indexed Tree)",
+            "ResizeObserver",
+            "IntersectionObserver",
+            "Node.js (test/benchmark harness)",
+            "npm",
+        ],
+
+        keyOutcomes: [
+            "Reduced dynamic-height re-measurement cost from O(n) to O(log n), ~2000x faster in benchmarks at 50,000 items",
+            "Reduced masonry infinite-scroll append cost from O(n) to O(k) for k new items, ~667x faster at 50,000 items",
+            "Eliminated a content-overlap bug traced to five independent, compounding root causes across the measurement pipeline",
+            "Published as an installable npm package with a documented, framework-adjacent core architecture",
+        ],
+
+        shortDescription:
+            "A React virtualization library (lists, grids, and masonry layouts) built around a Fenwick-tree-backed offset engine and an incremental layout engine, designed to stay O(log n) or better on dynamic content at scale rather than degrading as the dataset grows.",
+
+        problemStatement:
+            "Most hand-rolled or lightly-adapted virtualization code recomputes offset/position state in full whenever any single item's measured size changes — a pattern that works fine at small scale but degrades badly exactly where virtualization is supposed to help: large, dynamic-height lists and infinite-scrolling grids. The goal was a virtualization core that stays fast as N grows, handles genuinely unpredictable content heights, and supports list, grid, and masonry layouts from the same underlying offset math.",
+
+        businessContext:
+            "Built as a standalone open-source npm package and portfolio project, not a company product — the goal was to demonstrate library-level engineering depth (API design, algorithmic tradeoffs, published package) for senior frontend engineering roles, where 'built a CRUD app' doesn't differentiate but 'designed and shipped a performance-critical library other developers would import' does.",
+
+        technicalArchitecture:
+            "Core offset/layout math lives in framework-agnostic TypeScript classes (FenwickTree, VirtualizationEngine, GridLayoutEngine, MeasurementSystem) with zero React imports, wrapped by a thin React adapter layer (VirtualList, VirtualGrid, useVirtualList). VirtualizationEngine delegates all offset/size bookkeeping to a Fenwick tree instead of a plain prefix-sum array. GridLayoutEngine maintains running per-column-height (masonry) or per-row-offset (dynamic grid) state and only computes positions for items it hasn't seen, rather than rebuilding the full layout on every items-array change. MeasurementSystem wraps ResizeObserver, batching all size changes from a single browser frame into one flush rather than deferring corrections to a later frame.",
+
+        keyChallenges: [
+            "Making dynamic-height offset lookups fast without a full-array rebuild on every re-measurement",
+            "Avoiding O(n) masonry/grid layout recomputation when infinite scroll appends items to an already-large board",
+            "Diagnosing a multi-cause overlap bug where several independent issues (a disconnected callback wire, an explicit-height box blocking ResizeObserver, content-box vs border-box measurement, unstable ref identities, and deferred-frame corrections) each contributed to the same visible symptom",
+            "Growing a Fenwick tree's capacity after construction without invalidating prior point-update propagation — an initial naive implementation of this was provably incorrect and caught by a differential test against a naive reference array",
+            "Making infinite scroll's sentinel element reliable inside a virtualized list, where a sentinel nested in a conditionally-rendered last item may never mount in the first place",
+        ],
+
+        performanceOptimizations: [
+            "Fenwick tree (Binary Indexed Tree) for O(log n) point updates, prefix-sum offset queries, and offset-to-index lookups, replacing an O(n) rebuild-on-write prefix-sum array",
+            "Amortized-doubling capacity growth for the Fenwick tree (power-of-two capacity, full rebuild only on doubling events) instead of per-item growth that would have required O(n) work on every append",
+            "Incremental append-only masonry/grid layout engine (GridLayoutEngine) that reuses prior position calculations instead of recomputing the full layout on every items-array change",
+            "O(1) fast path for fixed-row-height grid layout — direct index arithmetic with zero array allocation, bypassing the general incremental engine entirely for the most common grid configuration",
+            "Binary-search visible-range lookup for masonry/dynamic-height grids, replacing a two-pass O(n) linear scan",
+            "IntersectionObserver-based infinite scroll instead of a scroll-event listener reading scrollTop/scrollHeight/clientHeight on every event, removing forced synchronous layout reads from the scroll hot path",
+            "Synchronous (flushSync-wrapped) measurement correction instead of deferring through an extra manual requestAnimationFrame layered on top of ResizeObserver's own per-frame batching, closing a one-frame visible-overlap window",
+        ],
+
+        failureScenariosHandled: [
+            "Off-screen (unmounted) items retaining a stale pre-resize height indefinitely after the container's width changes, since ResizeObserver only reports on currently-mounted elements — fixed via debounced full invalidation on cross-axis size change",
+            "Fenwick tree capacity growth silently under-counting totals when naive point-updates were bounded by the tree's size at the time of the update rather than its final size — caught by a differential test against a naive array before shipping",
+            "Sentinel element for infinite scroll never mounting because it was nested inside a conditionally-rendered last virtualized item — fixed with an always-mounted `footer` slot independent of virtualization",
+            "Measurement callback silently discarding every result because the wiring that sets the internal `onMeasure` callback was commented out — traced as the root cause of dynamic heights never updating past their initial estimate",
+            "Ref-callback identity churn causing every visible item to be unobserved and re-observed on every scroll frame, from a per-render inline closure instead of a stable per-index cached callback",
+            "AbortController cleanup that was constructed but never actually invoked, since the calling hook discarded the cleanup closure a loader function returned",
+        ],
+
+        systemDesignHighlights: [
+            "Framework-agnostic core (FenwickTree, VirtualizationEngine, GridLayoutEngine) with no React imports, architected so a Vue/Svelte adapter could reuse the same engines without modification",
+            "Separation between the 'fast path' (fixed-size grid, pure arithmetic, no data structure) and the 'general path' (masonry/dynamic sizing, incremental engine + binary search) rather than forcing every layout mode through one general algorithm",
+            "Injectable synchronous-flush hook (`setFlush`) in MeasurementSystem, letting the framework adapter supply React's flushSync without the core class needing to import react-dom",
+            "Accessibility built into the component layer (ARIA live-region range announcements, roving-tabindex keyboard navigation, correct list/grid ARIA semantics) rather than treated as an afterthought layered on top",
+        ],
+
+        tradeoffsAndDecisions: [
+            "Chose a Fenwick tree over a segment tree or a naive array: O(log n) for both point updates and prefix queries with a much smaller constant factor and simpler implementation than a full segment tree, at the cost of not supporting range updates (not needed here, since only single-item measurements are ever recorded)",
+            "Accepted that masonry's binary-search visible-range lookup is an approximation, not pixel-exact, since masonry's y-position isn't strictly monotonic in index order — mitigated with widened overscan rather than solved exactly, since an exact solution would require abandoning index-ordered virtualization entirely",
+            "Chose to make all ResizeObserver-triggered corrections flushSync-synchronous, trading a small amount of scroll-performance headroom for eliminating a visible overlap window — considered the right tradeoff since it only fires when content genuinely resizes, not on every scroll frame",
+            "Kept the default CSS deliberately minimal (box-sizing and scrollbar hygiene only) rather than shipping opinionated styling, so the library layers under any existing design system without a specificity fight",
+        ],
+
+        futureEnhancements: [
+            "Split into @virtualize/core (framework-agnostic) and @virtualize/react packages, with the door open for Vue/Svelte adapters reusing the same engines",
+            "Publish a reproducible, public benchmark suite comparing against react-window, react-virtuoso, and TanStack Virtual on identical workloads",
+            "Bidirectional infinite scroll with scroll-anchor preservation for chat/feed-style prepend-above-viewport loading",
+            "Sticky group headers integrated with the virtualization offset math for section-list UIs",
+            "SSR-safe initial render of the first visible window to avoid client-hydration layout shift",
+        ],
+
+        solutionsImplemented: [
+            "FenwickTree core primitive with amortized-doubling capacity growth, differentially tested against a naive reference array (5,000 random re-measurements, chunked incremental append, shrink/regrow, multi-doubling growth)",
+            "GridLayoutEngine for incremental masonry and dynamic-row-height grid layout, verified against a fresh full rebuild for both modes",
+            "VirtualList and VirtualGrid React components with a unified container/inner/item styling API (default classes merged with consumer-supplied classes and styles, geometry-critical style properties always protected from accidental override)",
+            "useInfiniteScroll hook rewritten around IntersectionObserver with a sentinel-ref pattern",
+            "Root-cause fixes across the dynamic-height measurement pipeline: reconnected the disconnected onMeasure callback wiring, removed the explicit-height constraint that prevented ResizeObserver from detecting content growth, switched from content-box to border-box measurement, stabilized ref-callback identity, and replaced deferred RAF-based correction with synchronous flushSync-based correction",
+        ],
+
+        impactMetrics: [
+            "~2000x reduction in re-measurement cost for a 50,000-item dynamic-height list under 2,000 simulated re-measurements (3313ms -> 1.6ms, measured via Node benchmark)",
+            "~667x reduction in masonry layout cost when infinite-scroll appending to a 50,000-item board in chunks of 20 (4279ms -> 6.4ms, measured via Node benchmark)",
+            "Zero correctness regressions across 8 differential test cases run against naive reference implementations (FenwickTree and GridLayoutEngine test suites)",
+            "One critical correctness bug (Fenwick tree capacity growth) caught and fixed before release via differential testing rather than shipped and discovered in production",
+        ],
+        demoLink: "https://react-virtual-renderer.vercel.app/",
+        repoLink: "https://github.com/rishabh-agarwal-business/virtualize",
+        packageLink: "https://www.npmjs.com/package/react-virtual-renderer"
+    },
     {
         "id": "use-toolkit",
         "title": "use-toolkit: React Hooks Library",
@@ -165,7 +269,9 @@ export const caseStudies: CaseStudy[] = [
             "Delivered comprehensive documentation covering internals and real-world usage",
             "Improved developer productivity by eliminating need for multiple libraries",
             "Ensured cross-browser compatibility with graceful degradation strategies"
-        ]
+        ],
+        repoLink: "https://github.com/rishabh-agarwal-business/use-toolkit",
+        packageLink: "https://www.npmjs.com/package/@use-toolkit/core"
     }
 ];
 

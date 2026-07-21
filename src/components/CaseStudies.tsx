@@ -7,11 +7,8 @@ import { caseStudies, type CaseStudy } from '@/data/data';
 import { GradientText } from './ui/GradientText';
 import { GradientCard } from './ui/GradientCard';
 import { GradientButton } from './ui/GradientButton';
+import ProjectLinks from './common/ProjectLinks';
 
-/**
- * Case Studies section component
- * Follows Single Responsibility Principle - only handles case studies display
- */
 export default function CaseStudies() {
     const [selectedProject, setSelectedProject] = useState(0);
 
@@ -127,10 +124,18 @@ function CaseStudiesContent({
                 {/* Header */}
                 <div className="flex items-start justify-between gap-4">
                     <div className="space-y-2">
-                        <h3 className="text-2xl font-bold font-['Space_Grotesk',sans-serif]">
+                        <h3 className="flex items-center gap-3 text-2xl font-bold font-['Space_Grotesk',sans-serif]">
                             <GradientText>
                                 {project.title}
                             </GradientText>
+
+                            <ProjectLinks
+                                repoLink={project.repoLink}
+                                packageLink={project.packageLink}
+                                demoLink={project.demoLink}
+                                size={18}
+                            />
+
                         </h3>
                         <span className="inline-block text-xs px-3 py-1 bg-linear-to-r from-zinc-700/40 to-gray-700/40 border border-zinc-600/30 text-zinc-300 rounded-full">
                             {project.domain}

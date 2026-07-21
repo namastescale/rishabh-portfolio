@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Component, Blocks, FileCode, Layers, Palette, Activity, Code2, Package, Shield, Database, Server } from 'lucide-react';
 import { motion } from 'motion/react';
 import { caseStudies } from '@/data/data';
+import ProjectLinks from './common/ProjectLinks';
 
 const techIcons: Record<string, any> = {
     'React': Component,
@@ -64,7 +65,15 @@ export default function CaseStudy() {
                             transition={{ duration: 0.5, delay: 0.1 }}
                         >
                             <div className="flex items-center gap-3 flex-wrap">
-                                <h1 className="text-4xl font-semibold font-['Space_Grotesk',sans-serif]">{caseStudy.title}</h1>
+                                <h1 className="text-4xl flex items-center gap-3 font-semibold font-['Space_Grotesk',sans-serif]">
+                                    {caseStudy.title}
+                                    <ProjectLinks
+                                        repoLink={caseStudy.repoLink}
+                                        packageLink={caseStudy.packageLink}
+                                        demoLink={caseStudy.demoLink}
+                                        size={24}
+                                    />
+                                </h1>
                                 <span className="px-3 py-1 bg-accent text-sm rounded-full">
                                     {caseStudy.domain}
                                 </span>
