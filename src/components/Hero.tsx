@@ -70,7 +70,7 @@ const Hero = () => {
                                 fullWidth
                                 className="sm:w-auto"
                             >
-                                <a href="/Rishabh_Resume.pdf" download>
+                                <a href="/Rishabh_Agarwal.pdf" download>
                                     Download Resume
                                 </a>
                             </GradientButton>
