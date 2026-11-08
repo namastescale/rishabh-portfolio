@@ -2,6 +2,7 @@ import {
     ExternalLink,
     Github,
     Package,
+    Youtube,
 } from "lucide-react";
 
 interface ProjectLinksProps {
@@ -10,6 +11,7 @@ interface ProjectLinksProps {
     repoLink?: string;
     packageLink?: string;
     demoLink?: string;
+    youtubeLink?: string;
     size?: number;
     className?: string;
 }
@@ -19,6 +21,7 @@ export default function ProjectLinks({
     repoLink,
     packageLink,
     demoLink,
+    youtubeLink,
     size = 18,
     className = "",
 }: ProjectLinksProps) {
@@ -63,6 +66,18 @@ export default function ProjectLinks({
                     className={`${iconClass} hover:text-sky-400`}
                 >
                     <ExternalLink size={size} aria-hidden="true" />
+                </a>
+            )}
+            {youtubeLink && (
+                <a
+                    href={youtubeLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label("YouTube channel")}
+                    title="YouTube channel"
+                    className={`${iconClass} hover:text-red-400`}
+                >
+                    <Youtube size={size} aria-hidden="true" />
                 </a>
             )}
         </div>

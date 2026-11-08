@@ -1,5 +1,5 @@
 import { skills } from "@/data/data";
-import { Blocks, Code2, Palette, Shield, Sparkles, Wrench, Zap, type LucideIcon } from "lucide-react"
+import { Blocks, Code2, Palette, Server, Shield, Sparkles, Wrench, Zap, type LucideIcon } from "lucide-react"
 import { memo, useMemo, useState } from "react"
 import { SectionHeader } from "./ui/SectionHeader";
 import { AnimatePresence, motion } from "motion/react";
@@ -12,6 +12,7 @@ const categoryIcons: Record<string, LucideIcon> = {
     'UI & Design Systems': Palette,
     'Architecture & Patterns': Wrench,
     'Security & Quality': Shield,
+    'Backend & Data': Server,
     'Tools & Infrastructure': Zap
 }
 

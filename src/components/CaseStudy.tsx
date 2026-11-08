@@ -81,6 +81,7 @@ export default function CaseStudy() {
                                     repoLink={caseStudy.repoLink}
                                     packageLink={caseStudy.packageLink}
                                     demoLink={caseStudy.demoLink}
+                                    youtubeLink={caseStudy.youtubeLink}
                                     size={22}
                                 />
                             </div>

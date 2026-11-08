@@ -25,7 +25,7 @@ const NotFound = lazy(() => import('./components/NotFound'));
 // One shared WebGL particle cloud behind every page; morphs per section (see three/SceneCanvas.tsx)
 const SceneCanvas = lazy(() => import('./components/three/SceneCanvas'));
 
-const MARQUEE = ['React', 'TypeScript', 'Angular', 'Next.js', 'Redux Toolkit', 'RxJS', 'Tailwind CSS', 'Node.js', 'NestJS', 'PostgreSQL', 'AWS', 'Web Performance', 'Accessibility', 'System Design'];
+const MARQUEE = ['React 19', 'TypeScript', 'Angular', 'Next.js', 'TanStack Query', 'Zustand', 'Redux Toolkit', 'RxJS', 'Tailwind CSS', 'three.js', 'NestJS', 'PostgreSQL', 'Redis', 'AWS', 'Cloudflare', 'Web Performance', 'Accessibility', 'System Design'];
 
 function HomePage() {
   return (

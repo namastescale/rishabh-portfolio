@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ArrowRight, CheckCircle2, ExternalLink, Sparkles } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ExternalLink, Sparkles, Youtube } from 'lucide-react';
 import { Link } from 'react-router';
 import { SectionHeader } from './ui/SectionHeader';
 import { GradientText } from './ui/GradientText';
@@ -87,7 +87,7 @@ function FeaturedProject({ project }: { project: CaseStudy }) {
                         ))}
                     </ul>
 
-                    <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 pt-2">
                         <Link to={`/case-study/${project.id}`} className="group/btn inline-block rounded-lg">
                             <GradientButton as="span">
                                 <span>Read the case study</span>
@@ -104,6 +104,19 @@ function FeaturedProject({ project }: { project: CaseStudy }) {
                                 icon={<ExternalLink className="w-4 h-4" aria-hidden="true" />}
                             >
                                 Visit {new URL(project.demoLink).hostname}
+                            </GradientButton>
+                        )}
+                        {project.youtubeLink && (
+                            <GradientButton
+                                as="a"
+                                href={project.youtubeLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                variant="outline"
+                                icon={<Youtube className="w-4 h-4" aria-hidden="true" />}
+                                iconPosition="left"
+                            >
+                                YouTube
                             </GradientButton>
                         )}
                     </div>

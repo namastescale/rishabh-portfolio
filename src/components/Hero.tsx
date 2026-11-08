@@ -231,8 +231,8 @@ const Hero = () => {
                             >
                                 NamasteScale
                             </Link>
-                            , a system design learning platform with AI-reviewed answers and mock interviews — React 19,
-                            NestJS, PostgreSQL and AWS.
+                            , a system design learning platform with AI-reviewed answers, mock interviews and an
+                            AI-assisted debugging round — React 19, NestJS, PostgreSQL, Redis and AWS behind Cloudflare.
                         </p>
                     </div>
                 </motion.div>
