@@ -45,7 +45,6 @@ export interface CaseStudy {
     demoLink?: string;
     youtubeLink?: string;
     repoLink?: string;
-    packageLink?: string;
 }
 
 export interface Experience {

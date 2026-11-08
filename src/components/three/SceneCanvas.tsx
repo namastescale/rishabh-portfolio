@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router';
 import * as THREE from 'three';
 import { getShape, isShapeName, SHAPE_STYLES, type ShapeName } from './shapes';
 
@@ -54,8 +53,6 @@ const FRAGMENT = /* glsl */ `
  */
 export default function SceneCanvas() {
     const mountRef = useRef<HTMLDivElement>(null);
-    const apiRef = useRef<{ rescan: () => void } | null>(null);
-    const { key } = useLocation();
 
     useEffect(() => {
         const mount = mountRef.current;
@@ -187,7 +184,6 @@ export default function SceneCanvas() {
             );
             document.querySelectorAll('[data-scene]').forEach((el) => io!.observe(el));
         };
-        apiRef.current = { rescan };
         rescan();
         // lazily-loaded pages mount their sections later — re-observe when [data-scene] nodes appear
         let pending = 0;
@@ -287,7 +283,6 @@ export default function SceneCanvas() {
             io?.disconnect();
             mo.disconnect();
             cancelAnimationFrame(pending);
-            apiRef.current = null;
             window.removeEventListener('resize', layout);
             window.removeEventListener('pointermove', onPointer);
             window.removeEventListener('scroll', onScroll);
@@ -299,11 +294,6 @@ export default function SceneCanvas() {
         };
     }, []);
 
-    // new page → its sections render in the next frame; observe them
-    useEffect(() => {
-        const id = requestAnimationFrame(() => apiRef.current?.rescan());
-        return () => cancelAnimationFrame(id);
-    }, [key]);
 
     return <div ref={mountRef} aria-hidden="true" className="pointer-events-none fixed inset-0 -z-[5]" />;
 }

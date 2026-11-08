@@ -1,7 +1,6 @@
 import {
     ExternalLink,
     Github,
-    Package,
     Youtube,
 } from "lucide-react";
 
@@ -9,7 +8,6 @@ interface ProjectLinksProps {
     /** Used to make link labels unique for screen readers */
     projectName?: string;
     repoLink?: string;
-    packageLink?: string;
     demoLink?: string;
     youtubeLink?: string;
     size?: number;
@@ -19,7 +17,6 @@ interface ProjectLinksProps {
 export default function ProjectLinks({
     projectName,
     repoLink,
-    packageLink,
     demoLink,
     youtubeLink,
     size = 18,
@@ -43,18 +40,6 @@ export default function ProjectLinks({
                 </a>
             )}
 
-            {packageLink && (
-                <a
-                    href={packageLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label("npm package")}
-                    title="npm Package"
-                    className={`${iconClass} hover:text-emerald-400`}
-                >
-                    <Package size={size} aria-hidden="true" />
-                </a>
-            )}
 
             {demoLink && (
                 <a

@@ -28,7 +28,7 @@ type AnchorProps = CommonProps & { as: 'a' } & Omit<AnchorHTMLAttributes<HTMLAnc
 /** Visual-only: use inside an existing <a>/<Link> to avoid nesting interactive elements */
 type SpanProps = CommonProps & { as: 'span' };
 
-export type GradientButtonProps = ButtonProps | AnchorProps | SpanProps;
+type GradientButtonProps = ButtonProps | AnchorProps | SpanProps;
 
 const hoverProps = {
     whileHover: { scale: 1.04 },

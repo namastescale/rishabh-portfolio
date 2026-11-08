@@ -3,10 +3,6 @@ import { motion } from 'motion/react';
 import { SectionHeader } from './ui/SectionHeader';
 import { Spotlight } from './fx/Spotlight';
 
-/**
- * Architecture section component
- * Follows Single Responsibility Principle - only handles architecture principles display
- */
 export default function Architecture() {
     const principles = [
         {

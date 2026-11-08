@@ -4,10 +4,6 @@ import { useState } from 'react';
 import { SectionHeader } from './ui/SectionHeader';
 import { experience, type Experience } from '@/data/data';
 
-/**
- * Experience section component
- * Follows Single Responsibility Principle - only handles experience display
- */
 export default function Experience() {
     const [selectedCompany, setSelectedCompany] = useState(0);
 
@@ -82,10 +78,6 @@ export default function Experience() {
     );
 }
 
-/**
- * ExperienceSidebar component
- * Displays a list of companies with buttons to select them
- */
 function ExperienceSidebar({
     experience,
     selectedCompany,
@@ -128,10 +120,6 @@ function ExperienceSidebar({
     );
 }
 
-/**
- * ExperienceContent component
- * Displays the details of the selected company's experience
- */
 function ExperienceContent({
     experience,
     selectedCompany,

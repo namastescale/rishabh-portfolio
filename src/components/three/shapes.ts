@@ -4,9 +4,9 @@ import * as THREE from 'three';
  * Point-cloud "shapes" the ambient background morphs between, one per section.
  * Every generator returns exactly `n` points (x, y, z) so any shape can morph into any other.
  */
-export type ShapeName = 'globe' | 'helix' | 'layers' | 'galaxy' | 'icosahedron' | 'portal' | 'scatter' | 'grid';
+export type ShapeName = 'helix' | 'layers' | 'galaxy' | 'icosahedron' | 'portal' | 'scatter' | 'grid';
 
-export interface ShapeStyle {
+interface ShapeStyle {
     /** colour at the bottom / top of the shape */
     colors: [string, string];
     /** where the shape sits, in world units, on desktop (mobile is always centred) */
@@ -21,7 +21,6 @@ export interface ShapeStyle {
 }
 
 export const SHAPE_STYLES: Record<ShapeName, ShapeStyle> = {
-    globe: { colors: ['#818cf8', '#22d3ee'], offset: [3.4, 0], scale: 1, tilt: 0.25, spin: 0.12 },
     helix: { colors: ['#22d3ee', '#a78bfa'], offset: [4.4, 0], scale: 1.05, tilt: 0.15, spin: 0.35 },
     layers: { colors: ['#a78bfa', '#22d3ee'], offset: [0, 0.2], scale: 1.9, tilt: 0.45, spin: 0.08 },
     galaxy: { colors: ['#f472b6', '#818cf8'], offset: [3.6, 0.4], scale: 1.25, tilt: 1.05, spin: 0.1 },
@@ -54,16 +53,6 @@ function alongSegments(n: number, segs: Float32Array, jitter = 0.02) {
 }
 
 const GENERATORS: Record<ShapeName, (n: number) => Float32Array> = {
-    // Fibonacci sphere with a little depth noise
-    globe: (n) => {
-        const golden = Math.PI * (3 - Math.sqrt(5));
-        return fill(n, (i) => {
-            const y = 1 - (i / (n - 1)) * 2;
-            const r = Math.sqrt(1 - y * y);
-            const R = 2.4 + rand(-0.05, 0.05);
-            return [Math.cos(golden * i) * r * R, y * R, Math.sin(golden * i) * r * R];
-        });
-    },
 
     // DNA double helix with rungs — "skills / building blocks"
     helix: (n) =>

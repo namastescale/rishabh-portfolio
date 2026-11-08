@@ -66,7 +66,7 @@ const Hero = () => {
             </div>
 
             <div className="relative max-w-6xl mx-auto px-6 pt-32 pb-16 md:min-h-[100svh] md:flex md:flex-col md:justify-center">
-                <div className="grid md:grid-cols-[1.1fr_1fr] gap-14 items-center">
+                <div className="grid md:grid-cols-[1.2fr_1fr] gap-14 items-center">
                     <div className="space-y-7">
                         {profile.openToWork && (
                             <motion.p
@@ -92,7 +92,7 @@ const Hero = () => {
                                 <SplitReveal
                                     text="Engineer."
                                     delay={0.35}
-                                    className="bg-linear-to-r from-indigo-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent animate-gradient"
+                                    className="bg-linear-to-r from-indigo-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent bg-[length:200%_200%] motion-safe:animate-gradient"
                                 />
                             </span>
                         </h1>
