@@ -11,6 +11,9 @@ import Experience from './components/Experience';
 import Architecture from './components/Architecture';
 import Contact from './components/Contact';
 import ScrollManager from './components/ScrollManager';
+import { Backdrop } from './components/fx/Backdrop';
+import { ScrollProgress } from './components/fx/ScrollProgress';
+import { Marquee } from './components/fx/Marquee';
 
 // Only non-critical / off-route code is code-split. Home sections are rendered
 // eagerly so in-page navigation (#contact etc.), scroll-spy, Ctrl+F and crawlers
@@ -19,11 +22,14 @@ const CustomCursor = lazy(() => import('./components/CustomCursor'));
 const CaseStudy = lazy(() => import('./components/CaseStudy'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
+const MARQUEE = ['React', 'TypeScript', 'Angular', 'Next.js', 'Redux Toolkit', 'RxJS', 'Tailwind CSS', 'Node.js', 'NestJS', 'PostgreSQL', 'AWS', 'Web Performance', 'Accessibility', 'System Design'];
+
 function HomePage() {
   return (
     <>
       <title>Rishabh Agarwal — Senior Frontend Engineer</title>
       <Hero />
+      <Marquee items={MARQUEE} />
       <Skills />
       <CaseStudies />
       <Experience />
@@ -38,6 +44,8 @@ function App() {
     <BrowserRouter>
       <MotionConfig reducedMotion="user">
         <ScrollManager />
+        <Backdrop />
+        <ScrollProgress />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-zinc-800 focus:text-white"

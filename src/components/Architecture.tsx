@@ -1,7 +1,7 @@
 import { Database, Shield, Zap, Blocks } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SectionHeader } from './ui/SectionHeader';
-import { GradientCard } from './ui/GradientCard';
+import { Spotlight } from './fx/Spotlight';
 
 /**
  * Architecture section component
@@ -51,7 +51,7 @@ export default function Architecture() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                            <GradientCard hover gradient="medium" className="p-6 h-full">
+                            <Spotlight className="p-6 h-full rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur transition-transform duration-300 hover:-translate-y-1">
                                 <div className="flex items-start gap-4">
                                     <motion.div
                                         className="p-3 rounded-lg bg-linear-to-br from-zinc-700/40 to-gray-700/40 border border-zinc-500/50 shrink-0"
@@ -69,7 +69,7 @@ export default function Architecture() {
                                         </p>
                                     </div>
                                 </div>
-                            </GradientCard>
+                            </Spotlight>
                         </motion.div>
                     ))}
                 </div>

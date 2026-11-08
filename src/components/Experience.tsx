@@ -110,13 +110,13 @@ function ExperienceSidebar({
                     aria-pressed={selectedCompany === index}
                     onClick={() => onSelectCompany(index)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all cursor-pointer ${selectedCompany === index
-                        ? 'bg-linear-to-r from-zinc-700/40 to-gray-700/40 border-l-2 border-zinc-500'
+                        ? 'bg-linear-to-r from-indigo-500/15 to-transparent border-l-2 border-indigo-400'
                         : 'hover:bg-accent/50 border-l-2 border-transparent'
                         }`}
                     whileHover={{ x: 4 }}
                     whileTap={{ scale: 0.98 }}
                 >
-                    <Building2 className={`w-5 h-5 shrink-0 ${selectedCompany === index ? 'text-zinc-400' : 'text-muted-foreground'
+                    <Building2 className={`w-5 h-5 shrink-0 ${selectedCompany === index ? 'text-indigo-300' : 'text-muted-foreground'
                         }`} />
                     <span className={`text-sm font-medium ${selectedCompany === index ? 'text-foreground' : 'text-muted-foreground'
                         }`}>

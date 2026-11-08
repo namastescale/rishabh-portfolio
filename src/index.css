@@ -82,6 +82,39 @@
 }
 
 @theme {
+    --animate-spin-slow: spin 8s linear infinite;
+    --animate-pulse-slow: pulse-slow 6s ease-in-out infinite;
+    --animate-aurora: aurora 18s ease-in-out infinite;
+    --animate-marquee: marquee 40s linear infinite;
+    --animate-shine: shine 3.5s ease-in-out infinite;
+    --animate-word-in: word-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+    @keyframes word-in {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse-slow {
+        0%, 100% { opacity: 0.55; transform: scale(1); }
+        50% { opacity: 0.9; transform: scale(1.05); }
+    }
+
+    @keyframes aurora {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        33% { transform: translate3d(6%, 4%, 0) scale(1.1); }
+        66% { transform: translate3d(-4%, 6%, 0) scale(0.95); }
+    }
+
+    @keyframes marquee {
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
+    }
+
+    @keyframes shine {
+        0% { background-position: 200% 0; }
+        60%, 100% { background-position: -200% 0; }
+    }
+
     --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --font-display: 'Space Grotesk Variable', 'Space Grotesk', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 }
@@ -238,5 +271,65 @@
 
     .animate-gradient {
         animation: none;
+    }
+}
+
+@layer utilities {
+    .bg-grid {
+        background-image:
+            linear-gradient(to right, oklch(1 0 0 / 5%) 1px, transparent 1px),
+            linear-gradient(to bottom, oklch(1 0 0 / 5%) 1px, transparent 1px);
+        background-size: 56px 56px;
+    }
+
+    .bg-noise {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .text-shine {
+        background: linear-gradient(110deg, #a1a1aa 35%, #ffffff 50%, #a1a1aa 65%);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* Pointer-following light on cards (see fx/Spotlight.tsx) */
+    .spotlight::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), oklch(0.7 0.15 270 / 12%), transparent 45%);
+        z-index: 0;
+    }
+
+    .spotlight::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), oklch(0.75 0.15 250 / 70%), transparent 50%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: 1;
+    }
+
+    .spotlight:hover::before,
+    .spotlight:hover::after {
+        opacity: 1;
+    }
+
+    .spotlight > :not(.absolute) {
+        position: relative;
+        z-index: 2;
     }
 }

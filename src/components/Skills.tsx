@@ -98,13 +98,13 @@ const SkillsSidebar = memo(function SkillsSidebar({
                         aria-pressed={selectedCategory === index}
                         onClick={() => onSelectCategory(index)}
                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all cursor-pointer ${selectedCategory === index
-                            ? 'bg-linear-to-r from-zinc-700/40 to-gray-700/40 border-l-2 border-zinc-500'
+                            ? 'bg-linear-to-r from-indigo-500/15 to-transparent border-l-2 border-indigo-400'
                             : 'hover:bg-accent/50 border-l-2 border-transparent'
                             }`}
                         whileHover={{ x: 4 }}
                         whileTap={{ scale: 0.98 }}
                     >
-                        <Icon className={`w-5 h-5 shrink-0 ${selectedCategory === index ? 'text-zinc-400' : 'text-muted-foreground'
+                        <Icon className={`w-5 h-5 shrink-0 ${selectedCategory === index ? 'text-indigo-300' : 'text-muted-foreground'
                             }`} />
                         <span className={`text-sm font-medium ${selectedCategory === index ? 'text-foreground' : 'text-muted-foreground'
                             }`}>
@@ -223,7 +223,7 @@ const SkillsMobile = memo(function SkillsMobile({
                             onClick={() => onSelectCategory(index)}
                             className="w-full flex items-center gap-3 p-4 text-left"
                         >
-                            <Icon className={`w-5 h-5 shrink-0 ${isOpen ? 'text-zinc-400' : 'text-muted-foreground'}`} />
+                            <Icon className={`w-5 h-5 shrink-0 ${isOpen ? 'text-indigo-300' : 'text-muted-foreground'}`} />
                             <span className={`text-base font-semibold font-display ${isOpen ? 'text-foreground' : 'text-muted-foreground'
                                 }`}>
                                 {skill.category}

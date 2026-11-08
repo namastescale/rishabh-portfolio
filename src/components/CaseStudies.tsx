@@ -5,6 +5,7 @@ import { SectionHeader } from './ui/SectionHeader';
 import { GradientText } from './ui/GradientText';
 import { GradientButton } from './ui/GradientButton';
 import { ArchitectureDiagram } from './ArchitectureDiagram';
+import { Spotlight } from './fx/Spotlight';
 import { caseStudies, type CaseStudy } from '@/data/data';
 
 export default function CaseStudies() {
@@ -33,12 +34,12 @@ function FeaturedProject({ project }: { project: CaseStudy }) {
     return (
         <motion.article
             aria-labelledby={`${project.id}-title`}
-            className="relative overflow-hidden rounded-2xl border border-zinc-600/30 bg-linear-to-br from-zinc-800/40 via-zinc-900/40 to-zinc-950/60 p-6 md:p-10"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
+          <Spotlight className="overflow-hidden rounded-3xl border border-white/10 bg-linear-to-br from-zinc-800/50 via-zinc-900/60 to-zinc-950/80 backdrop-blur p-6 md:p-10">
             {/* soft glow */}
             <div
                 aria-hidden="true"
@@ -143,6 +144,7 @@ function FeaturedProject({ project }: { project: CaseStudy }) {
                     ))}
                 </ul>
             </div>
+          </Spotlight>
         </motion.article>
     );
 }
