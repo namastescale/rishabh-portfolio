@@ -12,6 +12,7 @@ import Architecture from './components/Architecture';
 import Contact from './components/Contact';
 import ScrollManager from './components/ScrollManager';
 import { Backdrop } from './components/fx/Backdrop';
+import { SafeBoundary } from './components/fx/SafeBoundary';
 import { ScrollProgress } from './components/fx/ScrollProgress';
 import { Marquee } from './components/fx/Marquee';
 
@@ -21,6 +22,8 @@ import { Marquee } from './components/fx/Marquee';
 const CustomCursor = lazy(() => import('./components/CustomCursor'));
 const CaseStudy = lazy(() => import('./components/CaseStudy'));
 const NotFound = lazy(() => import('./components/NotFound'));
+// One shared WebGL particle cloud behind every page; morphs per section (see three/SceneCanvas.tsx)
+const SceneCanvas = lazy(() => import('./components/three/SceneCanvas'));
 
 const MARQUEE = ['React', 'TypeScript', 'Angular', 'Next.js', 'Redux Toolkit', 'RxJS', 'Tailwind CSS', 'Node.js', 'NestJS', 'PostgreSQL', 'AWS', 'Web Performance', 'Accessibility', 'System Design'];
 
@@ -45,6 +48,11 @@ function App() {
       <MotionConfig reducedMotion="user">
         <ScrollManager />
         <Backdrop />
+        <SafeBoundary>
+          <Suspense fallback={null}>
+            <SceneCanvas />
+          </Suspense>
+        </SafeBoundary>
         <ScrollProgress />
         <a
           href="#main"
@@ -54,9 +62,11 @@ function App() {
         </a>
 
         <div className="min-h-screen flex flex-col">
-          <Suspense fallback={null}>
-            <CustomCursor />
-          </Suspense>
+          <SafeBoundary>
+            <Suspense fallback={null}>
+              <CustomCursor />
+            </Suspense>
+          </SafeBoundary>
 
           <Navigation />
 

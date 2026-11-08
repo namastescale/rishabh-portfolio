@@ -32,7 +32,7 @@ export default function Architecture() {
     ];
 
     return (
-        <section id="approach" aria-labelledby="approach-title" className="py-20 px-6">
+        <section id="approach" data-scene="icosahedron" aria-labelledby="approach-title" className="py-20 px-6">
             <div className="max-w-6xl mx-auto">
                 <SectionHeader
                     id="approach-title"

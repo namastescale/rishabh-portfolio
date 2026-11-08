@@ -12,7 +12,7 @@ export default function Experience() {
     const [selectedCompany, setSelectedCompany] = useState(0);
 
     return (
-        <section id="experience" aria-labelledby="experience-title" className="py-20 px-6">
+        <section id="experience" data-scene="galaxy" aria-labelledby="experience-title" className="py-20 px-6">
             <div className="max-w-6xl mx-auto">
                 <SectionHeader
                     id="experience-title"

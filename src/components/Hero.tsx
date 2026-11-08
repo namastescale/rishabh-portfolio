@@ -9,6 +9,7 @@ import { RotatingWords } from './fx/RotatingWords';
 import { CountUp } from './fx/CountUp';
 import { Spotlight } from './fx/Spotlight';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
+import { SafeBoundary } from './fx/SafeBoundary';
 import { experience, profile } from '@/data/data';
 
 // three.js is ~150 KB — load it after first paint, never block the hero text
@@ -50,15 +51,17 @@ const Hero = () => {
     const sceneReady = useIdleMount();
 
     return (
-        <section id="about" aria-labelledby="hero-title" className="relative overflow-hidden">
+        <section id="about" data-scene="none" aria-labelledby="hero-title" className="relative overflow-hidden">
             {/* WebGL network globe */}
             <div className="absolute inset-0 pointer-events-none [mask-image:linear-gradient(to_bottom,black_70%,transparent)]">
                 {sceneReady && (
+                    <SafeBoundary>
                     <Suspense fallback={null}>
                         <motion.div className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.6 }}>
                             <HeroScene />
                         </motion.div>
                     </Suspense>
+                    </SafeBoundary>
                 )}
             </div>
 

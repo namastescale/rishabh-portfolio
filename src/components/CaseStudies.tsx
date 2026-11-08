@@ -10,7 +10,7 @@ import { caseStudies, type CaseStudy } from '@/data/data';
 
 export default function CaseStudies() {
     return (
-        <section id="case-studies" aria-labelledby="case-studies-title" className="py-20 px-6">
+        <section id="case-studies" data-scene="layers" aria-labelledby="case-studies-title" className="py-20 px-6">
             <div className="max-w-6xl mx-auto">
                 <SectionHeader
                     id="case-studies-title"
@@ -39,7 +39,7 @@ function FeaturedProject({ project }: { project: CaseStudy }) {
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <Spotlight className="overflow-hidden rounded-3xl border border-white/10 bg-linear-to-br from-zinc-800/50 via-zinc-900/60 to-zinc-950/80 backdrop-blur p-6 md:p-10">
+          <Spotlight className="overflow-hidden rounded-3xl border border-white/10 bg-linear-to-br from-zinc-800/35 via-zinc-900/45 to-zinc-950/60 backdrop-blur-sm p-6 md:p-10">
             {/* soft glow */}
             <div
                 aria-hidden="true"
